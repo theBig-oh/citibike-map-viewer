@@ -1,0 +1,57 @@
+// ── Color tokens ──────────────────────────────────────────────────────────────
+
+// Backgrounds
+$bg-base:       #e0e0e0;
+$bg-surface:    #cccccc;
+$bg-elevated:   #bbbbbb;
+$bg-overlay:    #aaaaaa;
+$bg-highlight:  #888888;
+
+// Borders
+$border-subtle: #aaaaaa;
+$border-base:   #888888;
+$border-muted:  #777777;
+$border-active: #444444;
+
+// Text
+$text-primary:  #0a0a0a;
+$text-secondary:#444444;
+$text-muted:    #555555;
+$text-faint:    #666666;
+$text-disabled: #777777;
+
+// Accent (greyscale — matches G2 display aesthetic)
+$accent:        #0a0a0a;
+$accent-on:     #e0e0e0;
+
+// Status
+$color-success: #0f0;   // debug log green
+
+// ── Typography tokens ─────────────────────────────────────────────────────────
+
+$font-ui:       -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace;
+$font-mono:     monospace;
+
+$text-xs:       11px;
+$text-sm:       12px;
+$text-base:     13px;
+$text-md:       14px;
+$text-lg:       16px;
+$text-xl:       20px;
+$text-count:    22px;
+
+// ── Spacing tokens ────────────────────────────────────────────────────────────
+
+$space-xs:  4px;
+$space-sm:  8px;
+$space-md:  12px;
+$space-lg:  16px;
+$space-xl:  24px;
+$space-2xl: 32px;
+
+// ── Radius tokens ─────────────────────────────────────────────────────────────
+
+$radius-sm:   4px;
+$radius-md:   6px;
+$radius-lg:   8px;
+$radius-full: 99px;

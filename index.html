@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CitiBike Map</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- Loading screen -->
+    <div id="phone-loading" class="loading" style="display:none">
+      <div class="loading__title">CitiBike Map</div>
+      <div class="loading__bar-wrap">
+        <div class="loading__bar-track">
+          <div id="phone-progress-bar" class="loading__bar"></div>
+        </div>
+        <div id="phone-progress-label" class="loading__label">Starting...</div>
+      </div>
+    </div>
+
+    <!-- Main UI -->
+    <div id="phone-ui" class="app" style="display:none">
+
+      <!-- Always-visible map -->
+      <div id="map-placeholder" class="map__placeholder">Loading map...</div>
+      <canvas id="map-canvas-phone" class="map__canvas" style="display:none"></canvas>
+
+      <!-- Tab bar -->
+      <div id="tab-bar" class="tabs">
+        <button class="tabs__btn active" data-tab="map" onclick="window.switchTab('map')">Map</button>
+        <button class="tabs__btn" data-tab="settings" onclick="window.switchTab('settings')">Settings</button>
+      </div>
+
+      <!-- Map tab -->
+      <div id="tab-map" class="tabs__panel">
+        <div id="city-switcher-wrapper" class="city-switcher">
+          <div id="city-switcher--name" class="city-switcher__label">
+            Select City (Defaults by geolocation):
+          </div>
+          <div id="city-switcher" class="city-switcher__buttons"></div>
+        </div>
+
+        <hr/>
+
+        <div id="mode-toggle" class="mode-toggle">
+          <button id="btn-available" class="mode-toggle__btn active" onclick="window.phoneToggleMode('available')">Bikes Available</button>
+          <button id="btn-docked" class="mode-toggle__btn" onclick="window.phoneToggleMode('docked')">Docks Available</button>
+        </div>
+
+        <div id="station-list" class="station-list">
+          <div id="no-stations" class="station-list__empty" style="display:none">No stations loaded yet</div>
+        </div>
+
+        <div id="station-pagination" class="pagination">
+          <button id="btn-prev-stations" class="pagination__btn" style="display:none" onclick="window.phonePrevStations()">&#8592; Previous</button>
+          <button id="btn-more-stations" class="pagination__btn" onclick="window.phoneMoreStations()">Next &#8594;</button>
+        </div>
+
+        <div id="refresh-row" class="refresh">
+          <button id="btn-refresh" class="refresh__btn" onclick="window.phoneRefresh()">Refresh</button>
+          <span id="refresh-timer" class="refresh__timer">Refreshes in 30s</span>
+        </div>
+      </div>
+
+      <!-- Settings tab -->
+      <div id="tab-settings" class="tabs__panel" style="display:none">
+
+        <div class="settings-section">
+          <div class="settings-section__label">Phone Map</div>
+          <div id="map-controls" class="map-controls">
+            <div class="map-controls__row">
+              <label for="slider-brightness">Brightness</label>
+              <input type="range" id="slider-brightness" min="0" max="200" step="1" value="157">
+              <span id="val-brightness">1.57</span>
+            </div>
+            <div class="map-controls__row">
+              <label for="slider-contrast">Contrast</label>
+              <input type="range" id="slider-contrast" min="0" max="200" step="1" value="72">
+              <span id="val-contrast">0.72</span>
+            </div>
+            <div class="map-controls__row">
+              <label for="phone-dither">Dither</label>
+              <select id="phone-dither"></select>
+            </div>
+            <div class="map-controls__row">
+              <label for="phone-invert">Invert</label>
+              <input type="checkbox" id="phone-invert">
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section__label">Glasses Map <br/>-- Adjust at your own risk, may hurt your glasses</div>
+          <div id="glasses-controls" class="map-controls">
+            <div class="map-controls__row">
+              <label for="glasses-brightness">Brightness</label>
+              <input type="range" id="glasses-brightness" min="-100" max="100" value="-15">
+              <span id="val-glasses-brightness">-15</span>
+            </div>
+            <div class="map-controls__row">
+              <label for="glasses-contrast">Contrast</label>
+              <input type="range" id="glasses-contrast" min="-100" max="100" value="-5">
+              <span id="val-glasses-contrast">-5</span>
+            </div>
+            <div class="map-controls__row">
+              <label for="glasses-dither">Dither</label>
+              <select id="glasses-dither"></select>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-reset-settings" class="settings-reset" onclick="window.resetSettings()">Reset to Defaults</button>
+
+      </div>
+
+    </div>
+
+    <!-- Debug log -->
+    <div id="log-wrap">
+      <div id="log-tab" onclick="const l=document.getElementById('log');const a=document.getElementById('log-arrow');const open=l.style.display!=='none';l.style.display=open?'none':'block';a.textContent=open?'▲':'▼';">
+        <span>debug log</span>
+        <span id="log-arrow">▲</span>
+      </div>
+      <div id="log"></div>
+    </div>
+
+    <script>
+      const log = document.getElementById('log')
+      const _log = (type, msg) => {
+        const line = `[${type}] ${msg}\n`
+        log.textContent += line
+        log.scrollTop = log.scrollHeight
+      }
+      window.onerror = (msg, src, line) => _log('ERR', `${msg} (${src}:${line})`)
+      window.onunhandledrejection = (e) => _log('REJ', e.reason?.message ?? e.reason ?? 'unknown')
+      const origLog = console.log.bind(console)
+      const origWarn = console.warn.bind(console)
+      const origErr = console.error.bind(console)
+      console.log = (...a) => { _log('LOG', a.join(' ')); origLog(...a) }
+      console.warn = (...a) => { _log('WARN', a.join(' ')); origWarn(...a) }
+      console.error = (...a) => { _log('ERR', a.join(' ')); origErr(...a) }
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

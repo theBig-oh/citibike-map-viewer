@@ -1,0 +1,55 @@
+@use 'settings' as *;
+@use 'display/phone/phone';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $bg-base;
+  color: $text-primary;
+  font-family: $font-ui;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid $border-base;
+  margin: $space-md 0;
+}
+
+// ── Debug log accordion ───────────────────────────────────────────────────────
+
+#log-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+#log-tab {
+  background: $bg-surface;
+  border-top: 1px solid $border-subtle;
+  padding: $space-xs $space-md;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font: $text-xs $font-mono;
+  color: $text-faint;
+  user-select: none;
+}
+
+#log {
+  display: none;
+  background: $bg-base;
+  color: $color-success;
+  font: $text-xs $font-mono;
+  padding: $space-xs $space-md;
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  border-top: 1px solid $border-subtle;
+}

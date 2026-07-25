@@ -1,0 +1,398 @@
+@use '../../settings' as *;
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+
+#tab-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid $border-subtle;
+  margin-top: $space-md;
+  margin-bottom: $space-md;
+}
+
+.tabs__btn {
+  flex: 1;
+  padding: $space-sm 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: $text-muted;
+  font-size: $text-base;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+
+  &.active {
+    color: $text-primary;
+    border-bottom-color: $accent;
+  }
+}
+
+// ── Settings panel ────────────────────────────────────────────────────────────
+
+.settings-section {
+  margin-bottom: $space-xl;
+}
+
+.settings-section__label {
+  font-size: $text-xs;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: $space-sm;
+}
+
+#map-controls {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.map-controls__row {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  font-size: $text-sm;
+  color: $text-secondary;
+
+  #glasses-controls & {
+    margin-bottom: 1rem;
+  }
+
+  label {
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  input[type='range'] {
+    flex: 1;
+    accent-color: $accent;
+  }
+
+  select {
+    flex: 1;
+    padding: 4px $space-sm;
+    border-radius: $radius-sm;
+    border: 1px solid $border-muted;
+    background: $bg-surface;
+    color: $text-primary;
+    font-size: $text-sm;
+    cursor: pointer;
+  }
+
+  span {
+    width: 36px;
+    text-align: right;
+    color: $text-faint;
+    font-size: $text-xs;
+    font-variant-numeric: tabular-nums;
+  }
+
+  input[type='checkbox'] {
+    width: 18px;
+    height: 18px;
+    accent-color: $accent;
+    cursor: pointer;
+  }
+}
+
+// ── Reset button ─────────────────────────────────────────────────────────────
+
+.settings-reset {
+  width: 100%;
+  padding: $space-sm 0;
+  border-radius: $radius-md;
+  border: 1px solid $border-muted;
+  background: $bg-surface;
+  color: $text-secondary;
+  font-size: $text-base;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: $bg-elevated;
+    color: $text-primary;
+  }
+}
+
+// ── Layout ────────────────────────────────────────────────────────────────────
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: $space-lg;
+  padding-bottom: 48px;
+}
+
+// ── Map ───────────────────────────────────────────────────────────────────────
+
+.map__canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: $radius-lg;
+  border: 1px solid $border-muted;
+}
+
+.map__placeholder {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  background: $bg-surface;
+  border-radius: $radius-lg;
+  border: 1px solid $border-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-faint;
+  font-size: $text-base;
+}
+
+// ── Refresh row ───────────────────────────────────────────────────────────────
+
+.refresh {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  margin-bottom: $space-md;
+}
+
+.refresh__btn {
+  flex-shrink: 0;
+  padding: $space-sm $space-lg;
+  border-radius: $radius-md;
+  border: 1px solid $border-muted;
+  background: $bg-surface;
+  color: $text-secondary;
+  font-size: $text-base;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: $bg-elevated;
+    color: $text-primary;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.refresh__timer {
+  flex: 1;
+  font-size: $text-sm;
+  color: $text-muted;
+  text-align: right;
+
+  &[data-paused] {
+    color: $text-disabled;
+    font-style: italic;
+  }
+}
+
+// ── City switcher ─────────────────────────────────────────────────────────────
+
+.city-switcher__buttons {
+  display: flex;
+  gap: $space-sm;
+  margin-bottom: $space-sm;
+  flex-wrap: wrap;
+
+  .city-switcher__btn {
+    flex: 1;
+    min-width: 0;
+    padding: $space-xs $space-sm;
+    border-radius: $radius-md;
+    border: 1px solid $border-muted;
+    background: $bg-overlay;
+    color: $text-secondary;
+    font-size: $text-sm;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &.active {
+      background: $bg-highlight;
+      color: $text-primary;
+      border-color: $border-active;
+    }
+  }
+}
+
+// ── Mode toggle ───────────────────────────────────────────────────────────────
+
+#mode-toggle {
+  display: flex;
+  gap: $space-sm;
+  margin-bottom: $space-md;
+
+  .mode-toggle__btn {
+    flex: 1;
+    padding: $space-sm 0;
+    border-radius: $radius-md;
+    border: 1px solid $border-muted;
+    background: $bg-overlay;
+    color: $text-secondary;
+    font-size: $text-base;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &.active {
+      background: $bg-highlight;
+      color: $text-primary;
+      border-color: $border-active;
+    }
+  }
+}
+
+// ── Station list ──────────────────────────────────────────────────────────────
+
+#station-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.station-card {
+  background: $bg-base;
+  border: 1px solid $border-base;
+  border-radius: $radius-lg;
+  padding: $space-md $space-md;
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+}
+
+.station-card__num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $accent;
+  color: $accent-on;
+  font-size: $text-base;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.station-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.station-card__name {
+  font-size: $text-md;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: $text-primary;
+}
+
+.station-card__meta {
+  font-size: $text-sm;
+  color: $text-muted;
+  margin-top: 3px;
+}
+
+.station-card__count {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.station-card__count-main {
+  font-size: $text-count;
+  font-weight: bold;
+  color: $text-primary;
+  line-height: 1;
+}
+
+.station-card__count-sub {
+  font-size: $text-sm;
+  color: $text-disabled;
+  margin-top: 2px;
+}
+
+.station-card__count-detail {
+  font-size: $text-sm;
+  color: $text-secondary;
+  margin-top: 2px;
+}
+
+.station-list__empty {
+  color: $text-faint;
+  font-size: $text-base;
+  text-align: center;
+  padding: $space-xl 0;
+}
+
+#station-pagination {
+  display: flex;
+  gap: $space-sm;
+  margin-top: $space-md;
+
+  .pagination__btn {
+    flex: 1;
+    padding: $space-sm 0;
+    border-radius: $radius-md;
+    border: 1px dashed $border-muted;
+    background: transparent;
+    color: $text-secondary;
+    font-size: $text-sm;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: $bg-surface;
+      color: $text-primary;
+    }
+  }
+}
+
+// ── Loading screen ────────────────────────────────────────────────────────────
+
+.loading {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: $space-xl;
+  padding: $space-2xl;
+
+  .loading__title {
+    font-size: $text-xl;
+    font-weight: 600;
+    color: $text-primary;
+    letter-spacing: 0.5px;
+  }
+
+  .loading__bar-wrap {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .loading__bar-track {
+    background: $bg-overlay;
+    border-radius: $radius-full;
+    height: 6px;
+    overflow: hidden;
+    border: 1px solid $border-base;
+  }
+
+  .loading__bar {
+    height: 100%;
+    width: 0%;
+    background: $accent;
+    border-radius: $radius-full;
+    transition: width 0.3s ease;
+  }
+
+  .loading__label {
+    margin-top: 10px;
+    font-size: $text-base;
+    color: $text-disabled;
+    text-align: center;
+  }
+}

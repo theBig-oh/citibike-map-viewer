@@ -1,0 +1,14 @@
+{
+  "package_id": "com.omedrano.citibikemap",
+  "edition": "202601",
+  "name": "CitiBike Map",
+  "version": "0.2.37",
+  "min_app_version": "2.0.0",
+  "min_sdk_version": "0.0.11",
+  "entrypoint": "index.html",
+  "permissions": [
+    { "name": "network", "desc": "Fetch CitiBike station data" },
+    { "name": "location", "desc": "Find nearby stations, Checks user location" }
+  ],
+  "supported_languages": ["en"]
+}
