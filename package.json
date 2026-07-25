@@ -1,11 +1,11 @@
 {
   "name": "citibike-map",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.38",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && evenhub pack app.json dist -o citibike-map.ehpk",
     "preview": "vite preview"
   },
   "devDependencies": {

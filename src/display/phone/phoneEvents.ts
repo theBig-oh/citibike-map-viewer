@@ -1,9 +1,9 @@
-import { appState, viewMode, setViewMode, stationPage, setStationPage, maxPage, REFRESH_MS, setGlassesBrightness, setGlassesContrast, setGlassesDitherMode, setPhoneDitherMode, setPhoneBrightness, setPhoneContrast, setPhoneInvert, DEFAULT_GLASSES_BRIGHTNESS, DEFAULT_GLASSES_CONTRAST, DEFAULT_GLASSES_DITHER, DEFAULT_PHONE_BRIGHTNESS, DEFAULT_PHONE_CONTRAST, DEFAULT_PHONE_DITHER, DEFAULT_PHONE_INVERT, activeCity, setActiveCity } from '../../state'
+import { appState, viewMode, setViewMode, stationPage, setStationPage, maxPage, REFRESH_MS, setRefreshMs, setGpsUpdateMs, DEFAULT_REFRESH_MS, DEFAULT_GPS_UPDATE_MS, setGlassesBrightness, setGlassesContrast, setGlassesDitherMode, setPhoneDitherMode, setPhoneBrightness, setPhoneContrast, setPhoneInvert, DEFAULT_GLASSES_BRIGHTNESS, DEFAULT_GLASSES_CONTRAST, DEFAULT_GLASSES_DITHER, DEFAULT_PHONE_BRIGHTNESS, DEFAULT_PHONE_CONTRAST, DEFAULT_PHONE_DITHER, DEFAULT_PHONE_INVERT, activeCity, setActiveCity } from '../../state'
 import type { ViewMode } from '../../types'
 import { updatePhoneUI } from './phoneUI'
 import { updateDetailInPlace } from '../glasses/screens'
 import { invalidateMapCache } from '../../utils/map'
-import { refreshData, getLastRefreshMs } from '../glasses/events'
+import { refreshData, getLastRefreshMs, restartTimers } from '../glasses/events'
 import { DITHER_MODES } from '../../utils/dither'
 import type { DitherMode } from '../../utils/dither'
 import { CITIES } from '../../utils/cities'
@@ -163,6 +163,22 @@ export function registerPhoneEvents() {
     applyGlassesSettings()
   })
 
+  document.getElementById('slider-gps-interval')?.addEventListener('input', (e) => {
+    const secs = Number((e.target as HTMLInputElement).value)
+    const el = document.getElementById('val-gps-interval')
+    if (el) el.textContent = `${secs}s`
+    setGpsUpdateMs(secs * 1000)
+    restartTimers()
+  })
+
+  document.getElementById('slider-list-interval')?.addEventListener('input', (e) => {
+    const secs = Number((e.target as HTMLInputElement).value)
+    const el = document.getElementById('val-list-interval')
+    if (el) el.textContent = `${secs}s`
+    setRefreshMs(secs * 1000)
+    restartTimers()
+  })
+
   ;(window as any).resetSettings = async () => {
     // Phone map
     setPhoneBrightness(DEFAULT_PHONE_BRIGHTNESS)
@@ -187,6 +203,14 @@ export function registerPhoneEvents() {
     if (gb) { gb.value = String(DEFAULT_GLASSES_BRIGHTNESS); document.getElementById('val-glasses-brightness')!.textContent = String(DEFAULT_GLASSES_BRIGHTNESS) }
     if (gc) { gc.value = String(DEFAULT_GLASSES_CONTRAST); document.getElementById('val-glasses-contrast')!.textContent = String(DEFAULT_GLASSES_CONTRAST) }
     if (gd) gd.value = DEFAULT_GLASSES_DITHER
+    // Refresh intervals
+    setGpsUpdateMs(DEFAULT_GPS_UPDATE_MS)
+    setRefreshMs(DEFAULT_REFRESH_MS)
+    const gi = document.getElementById('slider-gps-interval') as HTMLInputElement | null
+    const li = document.getElementById('slider-list-interval') as HTMLInputElement | null
+    if (gi) { gi.value = String(DEFAULT_GPS_UPDATE_MS / 1000); document.getElementById('val-gps-interval')!.textContent = `${DEFAULT_GPS_UPDATE_MS / 1000}s` }
+    if (li) { li.value = String(DEFAULT_REFRESH_MS / 1000); document.getElementById('val-list-interval')!.textContent = `${DEFAULT_REFRESH_MS / 1000}s` }
+    restartTimers()
     // Re-render both
     invalidateMapCache()
     if (appState === 'detail') await updateDetailInPlace()

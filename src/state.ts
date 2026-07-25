@@ -8,8 +8,12 @@ export function getStationInfoUrl(): string { return activeCity?.stationInfoUrl 
 export function getStationStatusUrl(): string { return activeCity?.stationStatusUrl ?? '' }
 export const PAGE_SIZE = 3
 export const MAX_FETCH = 12
-export const REFRESH_MS = 30_000
-export const GPS_UPDATE_MS = 2_000
+export const DEFAULT_REFRESH_MS = 30_000
+export const DEFAULT_GPS_UPDATE_MS = 2_000
+export let REFRESH_MS = DEFAULT_REFRESH_MS
+export let GPS_UPDATE_MS = DEFAULT_GPS_UPDATE_MS
+export function setRefreshMs(v: number) { REFRESH_MS = v }
+export function setGpsUpdateMs(v: number) { GPS_UPDATE_MS = v }
 export const FALLBACK_LAT = 40.7742744
 export const FALLBACK_LON = -73.924307
 export const TILE_W = 288

@@ -1,0 +1,25 @@
+@use '../../../settings' as *;
+
+#mode-toggle {
+    display: flex;
+    gap: $space-sm;
+    margin-bottom: $space-md;
+
+    .mode-toggle__btn {
+        flex: 1;
+        padding: $space-sm 0;
+        border-radius: $radius-md;
+        border: 1px solid $border-muted;
+        background: $bg-overlay;
+        color: $text-secondary;
+        font-size: $text-base;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+
+        &.active {
+            background: $bg-highlight;
+            color: $text-primary;
+            border-color: $border-active;
+        }
+    }
+}

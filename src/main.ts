@@ -8,8 +8,9 @@ import { setSplashBridge, updateSplashProgress } from './display/glasses/splash'
 import { setEventsBridge, registerGlassesEvents } from './display/glasses/events'
 import { showPhoneLoading } from './display/phone/phoneUI'
 import { registerPhoneEvents } from './display/phone/phoneEvents'
+import { detectCity } from './utils/cities'
 import {
-  setUserLat, setUserLon, setAllStations, setControlsCursor, setViewMode,
+  setUserLat, setUserLon, setAllStations, setControlsCursor, setViewMode, setActiveCity,
   userLat, userLon, FALLBACK_LAT, FALLBACK_LON,
 } from './state'
 
@@ -43,10 +44,16 @@ await new Promise(r => setTimeout(r, 2000))
 
 // ── Boot sequence with progress ───────────────────────────────────────────────
 
+const MIN_LOADING_MS = 3000
+const STEP_DELAY_MS = 300
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
+
+const bootStart = Date.now()
 showPhoneLoading(true)
 await showSplash()
 
 await updateSplashProgress(10, 'Getting location...')
+await sleep(STEP_DELAY_MS)
 try {
   const loc = await getUserLocation()
   setUserLat(loc.lat)
@@ -58,24 +65,41 @@ try {
   setUserLon(FALLBACK_LON)
 }
 await updateSplashProgress(25, 'Location ready')
+await sleep(STEP_DELAY_MS)
+
+const city = detectCity(userLat, userLon)
+setActiveCity(city)
 
 await updateSplashProgress(35, 'Fetching stations...')
-try {
-  const s = await fetchStations(userLat, userLon)
-  setAllStations(s)
-  console.log(`boot: fetched ${s.length} stations`)
-} catch (e) {
-  console.error('Station fetch failed:', e)
+await sleep(STEP_DELAY_MS)
+if (city) {
+  try {
+    const s = await fetchStations(userLat, userLon)
+    setAllStations(s)
+    console.log(`boot: fetched ${s.length} stations`)
+  } catch (e) {
+    console.error('Station fetch failed:', e)
+  }
+} else {
+  console.warn('boot: no bikeshare city detected at', userLat, userLon)
 }
 await updateSplashProgress(50, 'Stations ready')
+await sleep(STEP_DELAY_MS)
 
 await updateSplashProgress(60, 'Loading map tiles...')
+await sleep(STEP_DELAY_MS)
 await prefetchMapTiles(userLat, userLon)
 await updateSplashProgress(75, 'Map tiles cached')
+await sleep(STEP_DELAY_MS)
 
 await updateSplashProgress(90, 'Rendering map...')
+await sleep(STEP_DELAY_MS)
 await updateSplashProgress(100, 'Ready!')
-await new Promise(r => setTimeout(r, 400))
+
+// Keep the splash up for a minimum duration so the hint text is readable,
+// regardless of how fast the network calls above actually finished.
+const remaining = MIN_LOADING_MS - (Date.now() - bootStart)
+if (remaining > 0) await sleep(remaining)
 
 showPhoneLoading(false)
 

@@ -1,0 +1,22 @@
+@use '../../../settings' as *;
+
+.map__canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: $radius-lg;
+    border: 1px solid $border-muted;
+}
+
+.map__placeholder {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    background: $bg-surface;
+    border-radius: $radius-lg;
+    border: 1px solid $border-muted;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-faint;
+    font-size: $text-base;
+}

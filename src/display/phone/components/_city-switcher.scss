@@ -1,0 +1,35 @@
+@use '../../../settings' as *;
+
+.city-switcher {
+    margin-bottom: 1rem;
+
+    &__label {
+        margin-bottom: 0.5rem;
+    }
+
+    .city-switcher__buttons {
+        display: flex;
+        gap: $space-sm;
+        margin-bottom: $space-sm;
+        flex-wrap: wrap;
+
+        .city-switcher__btn {
+            flex: 1;
+            min-width: 0;
+            padding: $space-xs $space-sm;
+            border-radius: $radius-md;
+            border: 1px solid $border-muted;
+            background: $bg-overlay;
+            color: $text-secondary;
+            font-size: $text-sm;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+
+            &.active {
+                background: $bg-highlight;
+                color: $text-primary;
+                border-color: $border-active;
+            }
+        }
+    }
+}

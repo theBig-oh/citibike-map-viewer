@@ -75,6 +75,15 @@ export function registerGlassesEvents() {
   })
 
   lastRefreshMs = Date.now()
+  restartTimers()
+}
+
+// Re-creates the refresh/GPS intervals using the current REFRESH_MS/GPS_UPDATE_MS
+// values — call after either is changed at runtime (e.g. from the settings sliders).
+export function restartTimers() {
+  if (refreshTimer) clearInterval(refreshTimer)
+  if (gpsTimer) clearInterval(gpsTimer)
+
   const timer = setInterval(refreshData, REFRESH_MS)
   setRefreshTimer(timer)
 

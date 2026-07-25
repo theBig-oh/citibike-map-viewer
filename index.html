@@ -41,9 +41,7 @@
           </div>
           <div id="city-switcher" class="city-switcher__buttons"></div>
         </div>
-
-        <hr/>
-
+        
         <div id="mode-toggle" class="mode-toggle">
           <button id="btn-available" class="mode-toggle__btn active" onclick="window.phoneToggleMode('available')">Bikes Available</button>
           <button id="btn-docked" class="mode-toggle__btn" onclick="window.phoneToggleMode('docked')">Docks Available</button>
@@ -107,6 +105,22 @@
             <div class="map-controls__row">
               <label for="glasses-dither">Dither</label>
               <select id="glasses-dither"></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section__label">Refresh Intervals</div>
+          <div id="refresh-controls" class="map-controls">
+            <div class="map-controls__row">
+              <label for="slider-gps-interval">GPS Refresh</label>
+              <input type="range" id="slider-gps-interval" min="1" max="10" step="1" value="2">
+              <span id="val-gps-interval">2s</span>
+            </div>
+            <div class="map-controls__row">
+              <label for="slider-list-interval">List Refresh</label>
+              <input type="range" id="slider-list-interval" min="10" max="120" step="5" value="30">
+              <span id="val-list-interval">30s</span>
             </div>
           </div>
         </div>

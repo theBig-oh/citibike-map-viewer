@@ -1,0 +1,105 @@
+@use '../../../settings' as *;
+
+#station-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.station-card {
+    background: $bg-base;
+    border: 1px solid $border-base;
+    border-radius: $radius-lg;
+    padding: $space-md $space-md;
+    display: flex;
+    align-items: center;
+    gap: $space-md;
+}
+
+.station-card__num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: $accent;
+    color: $accent-on;
+    font-size: $text-base;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.station-card__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.station-card__name {
+    font-size: $text-md;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $text-primary;
+}
+
+.station-card__meta {
+    font-size: $text-sm;
+    color: $text-muted;
+    margin-top: 3px;
+}
+
+.station-card__count {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.station-card__count-main {
+    font-size: $text-count;
+    font-weight: bold;
+    color: $text-primary;
+    line-height: 1;
+}
+
+.station-card__count-sub {
+    font-size: $text-sm;
+    color: $text-disabled;
+    margin-top: 2px;
+}
+
+.station-card__count-detail {
+    font-size: $text-sm;
+    color: $text-secondary;
+    margin-top: 2px;
+}
+
+.station-list__empty {
+    color: $text-faint;
+    font-size: $text-base;
+    text-align: center;
+    padding: $space-xl 0;
+}
+
+#station-pagination {
+    display: flex;
+    gap: $space-sm;
+    margin-top: $space-md;
+
+    .pagination__btn {
+        flex: 1;
+        padding: $space-sm 0;
+        border-radius: $radius-md;
+        border: 1px dashed $border-muted;
+        background: transparent;
+        color: $text-secondary;
+        font-size: $text-sm;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+
+        &:hover {
+            background: $bg-surface;
+            color: $text-primary;
+        }
+    }
+}

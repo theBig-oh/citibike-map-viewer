@@ -110,16 +110,38 @@ export function updatePhoneUI(mapDataUrl?: string) {
   })
 }
 
+let progressCurrentPct = 0
+let progressTargetPct = 0
+let progressRafId: number | null = null
+
+function stepProgressAnimation() {
+  const diff = progressTargetPct - progressCurrentPct
+  progressCurrentPct += Math.abs(diff) < 0.15 ? diff : diff * 0.12
+  const bar = document.getElementById('phone-progress-bar')
+  if (bar) (bar as HTMLElement).style.width = `${progressCurrentPct}%`
+  progressRafId = Math.abs(progressTargetPct - progressCurrentPct) > 0.15
+    ? requestAnimationFrame(stepProgressAnimation)
+    : null
+}
+
 export function showPhoneLoading(visible: boolean) {
   const loading = document.getElementById('phone-loading')
   const main = document.getElementById('phone-ui')
   if (loading) loading.style.display = visible ? 'flex' : 'none'
   if (main) main.style.display = visible ? 'none' : 'block'
+  if (visible) {
+    if (progressRafId !== null) cancelAnimationFrame(progressRafId)
+    progressRafId = null
+    progressCurrentPct = 0
+    progressTargetPct = 0
+    const bar = document.getElementById('phone-progress-bar')
+    if (bar) (bar as HTMLElement).style.width = '0%'
+  }
 }
 
 export function updatePhoneProgress(pct: number, label: string) {
-  const bar = document.getElementById('phone-progress-bar')
+  progressTargetPct = pct
+  if (progressRafId === null) progressRafId = requestAnimationFrame(stepProgressAnimation)
   const lbl = document.getElementById('phone-progress-label')
-  if (bar) (bar as HTMLElement).style.width = `${pct}%`
   if (lbl) lbl.textContent = label
 }

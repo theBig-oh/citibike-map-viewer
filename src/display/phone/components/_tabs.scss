@@ -1,0 +1,27 @@
+@use '../../../settings' as *;
+
+#tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid $border-subtle;
+    margin-top: $space-md;
+    margin-bottom: $space-md;
+}
+
+.tabs__btn {
+    flex: 1;
+    padding: $space-sm 0;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: $text-muted;
+    font-size: $text-base;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    margin-bottom: -1px;
+
+    &.active {
+        color: $text-primary;
+        border-bottom-color: $accent;
+    }
+}

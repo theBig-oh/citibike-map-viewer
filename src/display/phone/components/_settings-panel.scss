@@ -1,0 +1,85 @@
+@use '../../../settings' as *;
+
+.settings-section {
+    margin-bottom: $space-xl;
+}
+
+.settings-section__label {
+    font-size: $text-xs;
+    font-weight: 600;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: $space-sm;
+}
+
+#map-controls {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+}
+
+.map-controls__row {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    #glasses-controls & {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        width: 80px;
+        flex-shrink: 0;
+    }
+
+    input[type='range'] {
+        flex: 1;
+        accent-color: $accent;
+    }
+
+    select {
+        flex: 1;
+        padding: 4px $space-sm;
+        border-radius: $radius-sm;
+        border: 1px solid $border-muted;
+        background: $bg-surface;
+        color: $text-primary;
+        font-size: $text-sm;
+        cursor: pointer;
+    }
+
+    span {
+        width: 36px;
+        text-align: right;
+        color: $text-faint;
+        font-size: $text-xs;
+        font-variant-numeric: tabular-nums;
+    }
+
+    input[type='checkbox'] {
+        width: 18px;
+        height: 18px;
+        accent-color: $accent;
+        cursor: pointer;
+    }
+}
+
+.settings-reset {
+    width: 100%;
+    padding: $space-sm 0;
+    border-radius: $radius-md;
+    border: 1px solid $border-muted;
+    background: $bg-surface;
+    color: $text-secondary;
+    font-size: $text-base;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+        background: $bg-elevated;
+        color: $text-primary;
+    }
+}

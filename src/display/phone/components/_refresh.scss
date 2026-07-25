@@ -1,0 +1,42 @@
+@use '../../../settings' as *;
+
+.refresh {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    margin-bottom: $space-md;
+}
+
+.refresh__btn {
+    flex-shrink: 0;
+    padding: $space-sm $space-lg;
+    border-radius: $radius-md;
+    border: 1px solid $border-muted;
+    background: $bg-surface;
+    color: $text-secondary;
+    font-size: $text-base;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+        background: $bg-elevated;
+        color: $text-primary;
+    }
+
+    &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+.refresh__timer {
+    flex: 1;
+    font-size: $text-sm;
+    color: $text-muted;
+    text-align: right;
+
+    &[data-paused] {
+        color: $text-disabled;
+        font-style: italic;
+    }
+}

@@ -1,0 +1,8 @@
+@use '../../../settings' as *;
+
+.app {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: $space-lg;
+    padding-bottom: 48px;
+}

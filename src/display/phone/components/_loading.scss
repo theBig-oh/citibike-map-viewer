@@ -1,0 +1,44 @@
+@use '../../../settings' as *;
+
+.loading {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: $space-xl;
+    padding: $space-2xl;
+
+    .loading__title {
+        font-size: $text-xl;
+        font-weight: 600;
+        color: $text-primary;
+        letter-spacing: 0.5px;
+    }
+
+    .loading__bar-wrap {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .loading__bar-track {
+        background: $bg-overlay;
+        border-radius: $radius-full;
+        height: 6px;
+        overflow: hidden;
+        border: 1px solid $border-base;
+    }
+
+    .loading__bar {
+        height: 100%;
+        width: 0%;
+        background: $accent;
+        border-radius: $radius-full;
+    }
+
+    .loading__label {
+        margin-top: 10px;
+        font-size: $text-base;
+        color: $text-disabled;
+        text-align: center;
+    }
+}
