@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     gap: $space-sm;
+    margin-top: $space-md;
     margin-bottom: $space-md;
 }
 
@@ -20,7 +21,7 @@
 
     &:hover {
         background: $bg-elevated;
-        color: $text-primary;
+        color: $text-highlight;
     }
 
     &:disabled {

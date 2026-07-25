@@ -3,25 +3,35 @@
 #tab-bar {
     display: flex;
     gap: 0;
-    border-bottom: 1px solid $border-subtle;
     margin-top: $space-md;
-    margin-bottom: $space-md;
+}
+
+.tabs__panel {
+    border: 1px solid black;
+    padding: 1rem 0.5rem;
 }
 
 .tabs__btn {
     flex: 1;
     padding: $space-sm 0;
     background: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: $text-muted;
+    border: 1px solid black;
+    color: $text-disabled;
     font-size: $text-base;
     cursor: pointer;
     transition: color 0.15s, border-color 0.15s;
     margin-bottom: -1px;
+    border-top-left-radius: 15px;
+    
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: bold;
+    background: $bg-overlay;
 
     &.active {
         color: $text-primary;
-        border-bottom-color: $accent;
+        background: $bg-base;
+        font-weight: bolder;
+        border-bottom: 2px solid transparent;
     }
 }

@@ -47,8 +47,10 @@
         border: 1px solid $border-muted;
         background: $bg-surface;
         color: $text-primary;
+        font-weight: bold;
         font-size: $text-sm;
         cursor: pointer;
+        letter-spacing: 3px;
     }
 
     span {
@@ -80,6 +82,6 @@
 
     &:hover {
         background: $bg-elevated;
-        color: $text-primary;
+        color: $text-highlight;
     }
 }

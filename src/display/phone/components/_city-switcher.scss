@@ -17,17 +17,18 @@
             flex: 1;
             min-width: 0;
             padding: $space-xs $space-sm;
-            border-radius: $radius-md;
+            border-top-left-radius: $radius-md;
             border: 1px solid $border-muted;
             background: $bg-overlay;
             color: $text-secondary;
             font-size: $text-sm;
             cursor: pointer;
             transition: background 0.15s, color 0.15s;
+            font-weight: bold;
 
             &.active {
                 background: $bg-highlight;
-                color: $text-primary;
+                color: $text-highlight;
                 border-color: $border-active;
             }
         }
